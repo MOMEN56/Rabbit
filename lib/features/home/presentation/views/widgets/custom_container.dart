@@ -17,7 +17,7 @@ class CustomContainer extends StatelessWidget {
     required this.unit,
     required this.data,
     this.icon,
-    this.isClicked = true,
+    this.isClicked = false,
   });
   @override
   Widget build(BuildContext context) {

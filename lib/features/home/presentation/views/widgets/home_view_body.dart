@@ -3,6 +3,7 @@ import 'package:rabbit/core/utils/app_colors.dart';
 import 'package:rabbit/core/utils/app_dimensions.dart';
 import 'package:rabbit/core/utils/widgets/custom_app_bar.dart';
 import 'package:rabbit/features/home/presentation/views/widgets/custom_container.dart';
+import 'package:rabbit/features/home/presentation/views/widgets/speed_meter.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -16,7 +17,7 @@ class HomeViewBody extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       body: Column(
         children: [
-          SizedBox(height: AppDimensions.usableHeight * 0.5),
+          SpeedMeter(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -39,6 +40,7 @@ class HomeViewBody extends StatelessWidget {
               const CustomContainer(unit: 'Jitter', data: '12 ms'),
             ],
           ),
+          SizedBox(height: AppDimensions.usableHeight * 0.02),
         ],
       ),
     );
