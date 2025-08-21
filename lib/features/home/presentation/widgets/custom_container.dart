@@ -22,6 +22,7 @@ class CustomContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppDimensions.init(context);
+
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
@@ -82,7 +83,7 @@ class CustomContainer extends StatelessWidget {
               child: Text(
                 data,
                 style: GoogleFonts.manrope(
-                  fontSize: 28.sp,
+                  fontSize: data.length < 10 ? 28.sp : 18.sp,
                   color: isClicked ? Colors.white : Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
@@ -93,17 +94,26 @@ class CustomContainer extends StatelessWidget {
                 SizedBox(
                   width: AppDimensions.width(0.14),
                   height: AppDimensions.usableHeight * 0.06,
-                  child: Lottie.asset(AppAssets.graph),
+                  child:
+                      isClicked
+                          ? Lottie.asset(AppAssets.graph, repeat: false)
+                          : Container(),
                 ),
                 SizedBox(
                   width: AppDimensions.width(0.14),
                   height: AppDimensions.usableHeight * 0.06,
-                  child: Lottie.asset(AppAssets.graph),
+                  child:
+                      isClicked
+                          ? Lottie.asset(AppAssets.graph, repeat: false)
+                          : Container(),
                 ),
                 SizedBox(
                   width: AppDimensions.width(0.14),
                   height: AppDimensions.usableHeight * 0.06,
-                  child: Lottie.asset(AppAssets.graph),
+                  child:
+                      isClicked
+                          ? Lottie.asset(AppAssets.graph, repeat: false)
+                          : Container(),
                 ),
               ],
             ),
