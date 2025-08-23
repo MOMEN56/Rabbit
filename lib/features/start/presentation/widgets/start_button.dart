@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rabbit/core/utils/app_assets.dart';
 import 'package:rabbit/core/utils/app_dimensions.dart';
-import 'package:rabbit/features/home/presentation/manager/cubits/cubit/internet_settings_cubit.dart';
 import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_cubit.dart';
 import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_state.dart';
 import 'package:vibration/vibration.dart';
@@ -26,7 +25,6 @@ class StartButton extends StatelessWidget {
                   Vibration.vibrate(preset: VibrationPreset.singleShortBuzz);
                 }
                 BlocProvider.of<StartViewCubit>(context).showRocketAnimation();
-                context.read<InternetSettingsCubit>().startDownloadTest();
               },
               child: Expanded(child: Lottie.asset(AppAssets.startButton)),
             ),

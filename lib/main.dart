@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rabbit/core/utils/routing/app_router.dart';
-import 'package:rabbit/features/home/presentation/manager/cubits/cubit/internet_settings_cubit.dart';
 import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_cubit.dart';
 
 void main() {
