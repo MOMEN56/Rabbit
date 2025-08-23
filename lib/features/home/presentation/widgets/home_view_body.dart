@@ -22,14 +22,18 @@ class HomeViewBody extends StatelessWidget {
           SpeedMeter(),
           BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
             builder: (context, state) {
-              if (state is InternetDownloadTestProgress) {
+              if (state is InternetDownloadTestProgress ||
+                  state is InternetDownloadTestSuccess) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomContainer(
                       unit: 'Download',
-                      data: '${state.downloadRate.toStringAsFixed(2)} Mbps',
+                      data:
+                          '${state is InternetDownloadTestProgress ? state.downloadRate.toStringAsFixed(2) : (state as InternetDownloadTestSuccess).downloadRate.toStringAsFixed(2)} Mbps',
                       icon: Icons.download,
+                      isClicked: state.isDownloading,
+                      showGraph: state.showGraph,
                     ),
                     const CustomContainer(
                       unit: 'Upload',
@@ -39,7 +43,6 @@ class HomeViewBody extends StatelessWidget {
                   ],
                 );
               } else {
-                // لو الاختبار لم يبدأ أو انتهى
                 return const SizedBox.shrink();
               }
             },

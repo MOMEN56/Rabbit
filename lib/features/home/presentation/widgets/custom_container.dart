@@ -11,6 +11,7 @@ class CustomContainer extends StatelessWidget {
   final String data;
   final IconData? icon;
   final bool isClicked;
+  final bool showGraph;
 
   const CustomContainer({
     super.key,
@@ -18,6 +19,7 @@ class CustomContainer extends StatelessWidget {
     required this.data,
     this.icon,
     this.isClicked = false,
+    this.showGraph = false,
   });
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class CustomContainer extends StatelessWidget {
               child: Text(
                 data,
                 style: GoogleFonts.manrope(
-                  fontSize: data.length < 10 ? 28.sp : 18.sp,
+                  fontSize: data.length < 13 ? 28.sp : 18.sp,
                   color: isClicked ? Colors.white : Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
@@ -95,7 +97,7 @@ class CustomContainer extends StatelessWidget {
                   width: AppDimensions.width(0.14),
                   height: AppDimensions.usableHeight * 0.06,
                   child:
-                      isClicked
+                      showGraph
                           ? Lottie.asset(AppAssets.graph, repeat: false)
                           : Container(),
                 ),
@@ -103,7 +105,7 @@ class CustomContainer extends StatelessWidget {
                   width: AppDimensions.width(0.14),
                   height: AppDimensions.usableHeight * 0.06,
                   child:
-                      isClicked
+                      showGraph
                           ? Lottie.asset(AppAssets.graph, repeat: false)
                           : Container(),
                 ),
@@ -111,7 +113,7 @@ class CustomContainer extends StatelessWidget {
                   width: AppDimensions.width(0.14),
                   height: AppDimensions.usableHeight * 0.06,
                   child:
-                      isClicked
+                      showGraph
                           ? Lottie.asset(AppAssets.graph, repeat: false)
                           : Container(),
                 ),

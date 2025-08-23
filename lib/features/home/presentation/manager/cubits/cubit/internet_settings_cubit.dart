@@ -4,7 +4,7 @@ import 'package:flutter_speed_test_plus/flutter_speed_test_plus.dart';
 part 'internet_settings_state.dart';
 
 class InternetSettingsCubit extends Cubit<InternetSettingsState> {
-  InternetSettingsCubit() : super(InternetSettingsInitial());
+  InternetSettingsCubit() : super(const InternetSettingsInitial());
 
   final FlutterInternetSpeedTest _internetSpeedTest =
       FlutterInternetSpeedTest()..enableLog();
@@ -12,7 +12,14 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
   Future<void> startDownloadTest() async {
     await _internetSpeedTest.startTesting(
       onStarted: () {
-        emit(InternetDownloadTestProgress(downloadRate: 0, progress: 0));
+        emit(
+          const InternetDownloadTestProgress(
+            downloadRate: 0,
+            progress: 0,
+            isDownloading: true, // أثناء الاختبار
+            showGraph: true,
+          ),
+        );
       },
       onProgress: (percent, data) {
         if (data.type == TestType.download) {
@@ -20,12 +27,20 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
             InternetDownloadTestProgress(
               downloadRate: data.transferRate,
               progress: percent,
+              isDownloading: true, // لسه الاختبار شغال
+              showGraph: true,
             ),
           );
         }
       },
       onCompleted: (download, upload) {
-        emit(InternetDownloadTestSuccess(download.transferRate));
+        emit(
+          InternetDownloadTestSuccess(
+            download.transferRate,
+            isDownloading: false, // رجع False بعد ما خلص
+            showGraph: true,
+          ),
+        );
       },
     );
   }
