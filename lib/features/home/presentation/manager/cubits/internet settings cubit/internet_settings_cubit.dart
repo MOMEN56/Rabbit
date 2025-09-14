@@ -9,7 +9,7 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
   final FlutterInternetSpeedTest _internetSpeedTest =
       FlutterInternetSpeedTest()..enableLog();
 
-  Future<void> startDownloadTest() async {
+  Future<void> startTest() async {
     await _internetSpeedTest.startTesting(
       onStarted: () {
         emit(
@@ -27,54 +27,29 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
               downloadProgress: percent,
             ),
           );
-        }
-      },
-      onCompleted: (download, upload) async {
-        emit(InternetDownloadSuccess(downloadRate: download.transferRate));
-        // Delay صغير قبل بدء Upload
-        await Future.delayed(const Duration(milliseconds: 200));
-        startUploadTest();
-      },
-    );
-  }
-
-  Future<void> startUploadTest() async {
-    await _internetSpeedTest.startTesting(
-      onStarted: () {
-        emit(
-          InternetUploadInProgress(
-            uploadRate: 0,
-            uploadProgress: 0,
-            downloadRate: state.downloadRate,
-            downloadProgress: state.downloadProgress,
-            showDownloadGraph: state.showDownloadGraph, // تمرير القيمة
-            showUploadGraph: true,
-          ),
-        );
-      },
-      onProgress: (percent, data) {
-        if (data.type == TestType.upload) {
+        } else if (data.type == TestType.upload) {
           emit(
             InternetUploadInProgress(
               uploadRate: data.transferRate,
               uploadProgress: percent,
               downloadRate: state.downloadRate,
-              downloadProgress: state.downloadProgress,
-              showDownloadGraph: state.showDownloadGraph,
-              showUploadGraph: true,
             ),
           );
         }
       },
       onCompleted: (download, upload) {
         emit(
-          InternetUploadSuccess(
+          InternetTestCompleted(
+            downloadRate: download.transferRate,
             uploadRate: upload.transferRate,
-            downloadRate: state.downloadRate,
-            showDownloadGraph: state.showDownloadGraph,
-            showUploadGraph: true,
           ),
         );
+      },
+      onError: (errorMessage, error) {
+        emit(const InternetSettingsInitial());
+      },
+      onCancel: () {
+        emit(const InternetSettingsInitial());
       },
     );
   }

@@ -31,35 +31,11 @@ class InternetDownloadInProgress extends InternetSettingsState {
   const InternetDownloadInProgress({
     required double downloadRate,
     required double downloadProgress,
-    double uploadRate = 0,
-    double uploadProgress = 0,
-    bool showDownloadGraph = true,
-    bool showUploadGraph = false,
   }) : super(
          isDownloading: true,
-         showDownloadGraph: showDownloadGraph,
-         isUploading: false,
-         showUploadGraph: showUploadGraph,
+         showDownloadGraph: true,
          downloadRate: downloadRate,
          downloadProgress: downloadProgress,
-         uploadRate: uploadRate,
-         uploadProgress: uploadProgress,
-       );
-}
-
-class InternetDownloadSuccess extends InternetSettingsState {
-  const InternetDownloadSuccess({
-    required double downloadRate,
-    double uploadRate = 0,
-    bool showDownloadGraph = true,
-    bool showUploadGraph = false,
-  }) : super(
-         isDownloading: false,
-         showDownloadGraph: showDownloadGraph,
-         isUploading: false,
-         showUploadGraph: showUploadGraph,
-         downloadRate: downloadRate,
-         uploadRate: uploadRate,
        );
 }
 
@@ -67,34 +43,25 @@ class InternetUploadInProgress extends InternetSettingsState {
   const InternetUploadInProgress({
     required double uploadRate,
     required double uploadProgress,
-    double downloadRate = 0,
-    double downloadProgress = 0,
-    bool showDownloadGraph = true,
-    bool showUploadGraph = true,
+    required double downloadRate,
   }) : super(
-         isDownloading: false,
-         showDownloadGraph: showDownloadGraph,
          isUploading: true,
-         showUploadGraph: showUploadGraph,
+         showUploadGraph: true,
+         showDownloadGraph: true,
          uploadRate: uploadRate,
          uploadProgress: uploadProgress,
          downloadRate: downloadRate,
-         downloadProgress: downloadProgress,
        );
 }
 
-class InternetUploadSuccess extends InternetSettingsState {
-  const InternetUploadSuccess({
+class InternetTestCompleted extends InternetSettingsState {
+  const InternetTestCompleted({
+    required double downloadRate,
     required double uploadRate,
-    double downloadRate = 0,
-    bool showDownloadGraph = true,
-    bool showUploadGraph = true,
   }) : super(
-         isDownloading: false,
-         showDownloadGraph: showDownloadGraph,
-         isUploading: false,
-         showUploadGraph: showUploadGraph,
-         uploadRate: uploadRate,
          downloadRate: downloadRate,
+         uploadRate: uploadRate,
+         showDownloadGraph: true,
+         showUploadGraph: true,
        );
 }

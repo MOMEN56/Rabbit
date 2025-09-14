@@ -22,30 +22,8 @@ class HomeViewBody extends StatelessWidget {
           SpeedMeter(),
           BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
             builder: (context, state) {
-              // قيم افتراضية
-              double downloadRate = 0;
-              bool isDownloading = false;
-              bool showDownloadGraph = false;
-
-              double uploadRate = 0;
-              bool isUploading = false;
-              bool showUploadGraph = false;
-
-              // ضبط القيم بناءً على نوع الـ state
-              if (state is InternetDownloadInProgress ||
-                  state is InternetDownloadSuccess) {
-                downloadRate = state.downloadRate;
-                isDownloading = state.isDownloading;
-                showDownloadGraph = state.showDownloadGraph;
-              }
-
-              if (state is InternetUploadInProgress ||
-                  state is InternetUploadSuccess) {
-                downloadRate = state.downloadRate;
-                uploadRate = state.uploadRate;
-                isUploading = state.isUploading;
-                showUploadGraph = state.showUploadGraph;
-              }
+              double downloadRate = state.downloadRate;
+              double uploadRate = state.uploadRate;
 
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -54,15 +32,15 @@ class HomeViewBody extends StatelessWidget {
                     unit: 'Download',
                     data: '${downloadRate.toStringAsFixed(2)} Mbps',
                     icon: Icons.download,
-                    isClicked: isDownloading,
-                    showGraph: true,
+                    isClicked: state.isDownloading,
+                    showGraph: state.showDownloadGraph,
                   ),
                   CustomContainer(
                     unit: 'Upload',
                     data: '${uploadRate.toStringAsFixed(2)} Mbps',
                     icon: Icons.upload,
-                    isClicked: isUploading,
-                    showGraph: showUploadGraph,
+                    isClicked: state.isUploading,
+                    showGraph: state.showUploadGraph,
                   ),
                 ],
               );
@@ -70,9 +48,9 @@ class HomeViewBody extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const CustomContainer(unit: 'Ping', data: '15 ms'),
-              const CustomContainer(unit: 'Jitter', data: '12 ms'),
+            children: const [
+              CustomContainer(unit: 'Ping', data: '15 ms'),
+              CustomContainer(unit: 'Jitter', data: '12 ms'),
             ],
           ),
           SizedBox(height: AppDimensions.usableHeight * 0.02),

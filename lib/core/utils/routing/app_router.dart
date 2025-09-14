@@ -13,7 +13,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder:
               (_) => BlocProvider(
-                create: (_) => InternetSettingsCubit()..startDownloadTest(),
+                create: (_) => InternetSettingsCubit()..startTest(),
                 child: const HomeView(),
               ),
         );
