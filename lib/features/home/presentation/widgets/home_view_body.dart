@@ -19,7 +19,22 @@ class HomeViewBody extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       body: Column(
         children: [
-          SpeedMeter(),
+          SizedBox(height: AppDimensions.usableHeight * 0.03),
+
+          BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
+            builder: (context, state) {
+              final speed =
+                  state.isUploading ? state.uploadRate : state.downloadRate;
+
+              return Container(
+                height: AppDimensions.usableHeight * 0.4,
+                width: AppDimensions.screenWidth * 0.9,
+                child: SpeedMeter(speed: speed),
+              );
+            },
+          ),
+          SizedBox(height: AppDimensions.usableHeight * 0.08),
+
           BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
             builder: (context, state) {
               double downloadRate = state.downloadRate;
@@ -46,6 +61,8 @@ class HomeViewBody extends StatelessWidget {
               );
             },
           ),
+
+          // ✅ Ping & Jitter ثابتة
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -53,7 +70,7 @@ class HomeViewBody extends StatelessWidget {
               CustomContainer(unit: 'Jitter', data: '12 ms'),
             ],
           ),
-          SizedBox(height: AppDimensions.usableHeight * 0.02),
+          SizedBox(height: AppDimensions.usableHeight * 0.03),
         ],
       ),
     );
