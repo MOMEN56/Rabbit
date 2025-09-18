@@ -10,6 +10,8 @@ abstract class InternetSettingsState {
   final double uploadRate;
   final double downloadProgress;
   final double uploadProgress;
+  final int ping;
+  final bool bool6Sec;
 
   const InternetSettingsState({
     this.isDownloading = false,
@@ -20,6 +22,8 @@ abstract class InternetSettingsState {
     this.uploadRate = 0,
     this.downloadProgress = 0,
     this.uploadProgress = 0,
+    this.ping = 0,
+    this.bool6Sec = false,
   });
 }
 
@@ -58,10 +62,14 @@ class InternetTestCompleted extends InternetSettingsState {
   const InternetTestCompleted({
     required double downloadRate,
     required double uploadRate,
+    required int ping,
+    bool bool6Sec = false,
   }) : super(
          downloadRate: downloadRate,
          uploadRate: uploadRate,
          showDownloadGraph: true,
          showUploadGraph: true,
+         ping: ping,
+         bool6Sec: bool6Sec,
        );
 }

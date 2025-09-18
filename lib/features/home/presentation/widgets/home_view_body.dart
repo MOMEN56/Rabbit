@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rabbit/core/utils/app_colors.dart';
 import 'package:rabbit/core/utils/app_dimensions.dart';
+import 'package:rabbit/core/utils/format_helper.dart';
 import 'package:rabbit/core/utils/widgets/custom_app_bar.dart';
 import 'package:rabbit/features/home/presentation/manager/cubits/internet%20settings%20cubit/internet_settings_cubit.dart';
 import 'package:rabbit/features/home/presentation/widgets/custom_container.dart';
@@ -19,7 +20,7 @@ class HomeViewBody extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       body: Column(
         children: [
-          SizedBox(height: AppDimensions.usableHeight * 0.03),
+          SizedBox(height: AppDimensions.usableHeight * 0.025),
 
           BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
             builder: (context, state) {
@@ -27,8 +28,7 @@ class HomeViewBody extends StatelessWidget {
                   state.isUploading ? state.uploadRate : state.downloadRate;
 
               return Container(
-                height: AppDimensions.usableHeight * 0.4,
-                width: AppDimensions.screenWidth * 0.9,
+                height: AppDimensions.usableHeight * 0.35,
                 child: SpeedMeter(speed: speed),
               );
             },
@@ -37,40 +37,53 @@ class HomeViewBody extends StatelessWidget {
 
           BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
             builder: (context, state) {
+              final cubit = context.read<InternetSettingsCubit>();
               double downloadRate = state.downloadRate;
               double uploadRate = state.uploadRate;
+              String ip = cubit.ip ?? '0.0.0.0';
+              int pingValue = state.ping;
 
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              return Column(
                 children: [
-                  CustomContainer(
-                    unit: 'Download',
-                    data: '${downloadRate.toStringAsFixed(2)} Mbps',
-                    icon: Icons.download,
-                    isClicked: state.isDownloading,
-                    showGraph: state.showDownloadGraph,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomContainer(
+                        unit: 'Download',
+                        data: FormatHelper.formatSpeed(downloadRate),
+                        icon: Icons.download,
+                        isClicked: state.isDownloading,
+                        showGraph: state.showDownloadGraph,
+                      ),
+                      CustomContainer(
+                        unit: 'Upload',
+                        data: FormatHelper.formatSpeed(uploadRate),
+                        icon: Icons.upload,
+                        isClicked: state.isUploading,
+                        showGraph: state.showUploadGraph,
+                      ),
+                    ],
                   ),
-                  CustomContainer(
-                    unit: 'Upload',
-                    data: '${uploadRate.toStringAsFixed(2)} Mbps',
-                    icon: Icons.upload,
-                    isClicked: state.isUploading,
-                    showGraph: state.showUploadGraph,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomContainer(
+                        unit: 'Ping',
+                        data: '${pingValue.toString()} ms',
+                        isClicked: state.bool6Sec,
+                      ),
+                      CustomContainer(
+                        unit: 'IP',
+                        data: pingValue != 0 ? ip : '0.0.0.0',
+                        isClicked: state.bool6Sec,
+                      ),
+                    ],
                   ),
                 ],
               );
             },
           ),
-
-          // ✅ Ping & Jitter ثابتة
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              CustomContainer(unit: 'Ping', data: '15 ms'),
-              CustomContainer(unit: 'Jitter', data: '12 ms'),
-            ],
-          ),
-          SizedBox(height: AppDimensions.usableHeight * 0.03),
+          SizedBox(height: AppDimensions.usableHeight * 0.025),
         ],
       ),
     );

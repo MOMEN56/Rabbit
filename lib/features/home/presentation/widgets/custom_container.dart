@@ -85,10 +85,15 @@ class CustomContainer extends StatelessWidget {
               child: Text(
                 data,
                 style: GoogleFonts.manrope(
-                  fontSize: data.length < 13 ? 28.sp : 18.sp,
+                  fontSize: data.length < 14 ? 28.sp : 22.sp,
                   color: isClicked ? Colors.white : Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
+                maxLines: 1, // 👈 سطر واحد فقط
+                overflow:
+                    data.length > 18
+                        ? TextOverflow.ellipsis
+                        : TextOverflow.visible,
               ),
             ),
             Row(

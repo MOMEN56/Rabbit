@@ -17,8 +17,7 @@ class StartButton extends StatelessWidget {
     return BlocBuilder<StartViewCubit, StartViewState>(
       builder: (context, state) {
         if (state is StartViewButtonState) {
-          return Padding(
-            padding: EdgeInsets.only(top: AppDimensions.usableHeight * 0.08),
+          return Expanded(
             child: GestureDetector(
               onTap: () async {
                 if (await Vibration.hasCustomVibrationsSupport()) {
@@ -26,7 +25,7 @@ class StartButton extends StatelessWidget {
                 }
                 BlocProvider.of<StartViewCubit>(context).showRocketAnimation();
               },
-              child: Expanded(child: Lottie.asset(AppAssets.startButton)),
+              child: Center(child: Lottie.asset(AppAssets.startButton)),
             ),
           );
         } else {

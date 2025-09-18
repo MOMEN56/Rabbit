@@ -15,9 +15,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: AppColors.backgroundColor,
       automaticallyImplyLeading: showBackButton, // ← يتحكم في إظهار زر الرجوع
-      title: Text(
-        "Speed Test",
-        style: GoogleFonts.manrope(fontWeight: FontWeight.bold),
+      title: Center(
+        child: Text(
+          "Speed Test",
+          style: GoogleFonts.manrope(fontWeight: FontWeight.bold),
+        ),
       ),
       centerTitle: true,
     );
