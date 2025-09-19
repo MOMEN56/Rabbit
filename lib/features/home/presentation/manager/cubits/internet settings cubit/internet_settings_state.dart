@@ -73,3 +73,7 @@ class InternetTestCompleted extends InternetSettingsState {
          bool6Sec: bool6Sec,
        );
 }
+
+class InternetTestCancelled extends InternetSettingsState {
+  const InternetTestCancelled();
+}

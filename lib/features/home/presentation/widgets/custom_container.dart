@@ -21,6 +21,7 @@ class CustomContainer extends StatelessWidget {
     this.isClicked = false,
     this.showGraph = false,
   });
+
   @override
   Widget build(BuildContext context) {
     AppDimensions.init(context);
@@ -31,7 +32,14 @@ class CustomContainer extends StatelessWidget {
         height: AppDimensions.usableHeight * 0.20,
         width: AppDimensions.screenWidth * 0.44,
         decoration: BoxDecoration(
-          color: isClicked ? AppColors.blue : Colors.white,
+          gradient:
+              isClicked
+                  ? LinearGradient(
+                    colors: [Colors.blue[900]!, Colors.blue[400]!],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  )
+                  : const LinearGradient(colors: [Colors.white, Colors.white]),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -43,7 +51,6 @@ class CustomContainer extends StatelessWidget {
                 if (icon != null)
                   Padding(
                     padding: EdgeInsets.only(top: 24.h, left: 12.h),
-
                     child: Container(
                       width: 48.sp,
                       height: 48.sp,
@@ -63,7 +70,6 @@ class CustomContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 Padding(
                   padding: EdgeInsets.only(
                     left: (icon != null ? 8.h : 24.h),
@@ -89,7 +95,7 @@ class CustomContainer extends StatelessWidget {
                   color: isClicked ? Colors.white : Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
-                maxLines: 1, // 👈 سطر واحد فقط
+                maxLines: 1,
                 overflow:
                     data.length > 18
                         ? TextOverflow.ellipsis

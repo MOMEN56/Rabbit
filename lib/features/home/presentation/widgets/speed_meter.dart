@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 class SpeedMeter extends StatelessWidget {
   final double speed;
 
-  const SpeedMeter({super.key, required this.speed});
+  const SpeedMeter({super.key, this.speed = 0.0});
 
   @override
   Widget build(BuildContext context) {

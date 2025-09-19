@@ -17,7 +17,17 @@ class HomeViewBody extends StatelessWidget {
     AppDimensions.init(context);
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
+          builder: (context, state) {
+            final bool showCancel =
+                state is InternetDownloadInProgress ||
+                state is InternetUploadInProgress;
+            return CustomAppBar(cancelIcon: showCancel);
+          },
+        ),
+      ),
       backgroundColor: AppColors.backgroundColor,
       body: Column(
         children: [
@@ -25,18 +35,20 @@ class HomeViewBody extends StatelessWidget {
 
           BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
             builder: (context, state) {
+              final cubit = context.read<InternetSettingsCubit>();
               final speed =
                   state.isUploading ? state.uploadRate : state.downloadRate;
               final bool testCompleted = state is InternetTestCompleted;
-              return Container(
+
+              return SizedBox(
                 height: AppDimensions.usableHeight * 0.35,
                 child:
-                    (testCompleted && !state.bool6Sec)
+                    (testCompleted && !state.bool6Sec) ||
+                            state is InternetTestCancelled
                         ? StartButton(
                           onPressed: () {
-                            final cubit = context.read<InternetSettingsCubit>();
-                            cubit.reset(); // يعمل Reset
-                            cubit.startTest(); // يبدأ الاختبار
+                            cubit.reset(); // يرجع Initial
+                            cubit.startTest(); // يبدأ الاختبار من جديد
                           },
                         )
                         : SpeedMeter(speed: speed),
@@ -93,6 +105,7 @@ class HomeViewBody extends StatelessWidget {
               );
             },
           ),
+
           SizedBox(height: AppDimensions.usableHeight * 0.025),
         ],
       ),

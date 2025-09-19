@@ -58,18 +58,16 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
           );
         });
       },
-      onDefaultServerSelectionInProgress: () {
-        // ممكن تبين لليوزر ان السيرفر بيتحدد
-      },
+      onDefaultServerSelectionInProgress: () {},
       onDefaultServerSelectionDone: (client) {
         _ip = client?.ip ?? "0.0.0.0";
-        emit(state); // ⚠️ هنا الأفضل تعمل نسخة جديدة بالـ ip لو أضفناه في state
+        emit(state);
       },
       onError: (errorMessage, error) {
         emit(const InternetSettingsInitial());
       },
       onCancel: () {
-        emit(const InternetSettingsInitial());
+        emit(const InternetTestCancelled()); // 👈 حالة جديدة
       },
     );
   }
@@ -93,5 +91,10 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
 
   void reset() {
     emit(const InternetSettingsInitial());
+  }
+
+  void cancelTest() {
+    _internetSpeedTest.cancelTest();
+    emit(const InternetTestCancelled()); // 👈 بدل Initial
   }
 }
