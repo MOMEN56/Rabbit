@@ -7,6 +7,7 @@ import 'package:rabbit/core/utils/widgets/custom_app_bar.dart';
 import 'package:rabbit/features/home/presentation/manager/cubits/internet%20settings%20cubit/internet_settings_cubit.dart';
 import 'package:rabbit/features/home/presentation/widgets/custom_container.dart';
 import 'package:rabbit/features/home/presentation/widgets/speed_meter.dart';
+import 'package:rabbit/features/start/presentation/widgets/start_button.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -26,10 +27,19 @@ class HomeViewBody extends StatelessWidget {
             builder: (context, state) {
               final speed =
                   state.isUploading ? state.uploadRate : state.downloadRate;
-
+              final bool testCompleted = state is InternetTestCompleted;
               return Container(
                 height: AppDimensions.usableHeight * 0.35,
-                child: SpeedMeter(speed: speed),
+                child:
+                    (testCompleted && !state.bool6Sec)
+                        ? StartButton(
+                          onPressed: () {
+                            final cubit = context.read<InternetSettingsCubit>();
+                            cubit.reset(); // يعمل Reset
+                            cubit.startTest(); // يبدأ الاختبار
+                          },
+                        )
+                        : SpeedMeter(speed: speed),
               );
             },
           ),

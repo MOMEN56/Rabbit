@@ -9,7 +9,9 @@ import 'package:vibration/vibration.dart';
 import 'package:vibration/vibration_presets.dart';
 
 class StartButton extends StatelessWidget {
-  const StartButton({super.key});
+  final VoidCallback? onPressed; // 👈 بقت optional
+
+  const StartButton({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,14 @@ class StartButton extends StatelessWidget {
         if (state is StartViewButtonState) {
           return Expanded(
             child: GestureDetector(
+              behavior: HitTestBehavior.opaque, // 👈 يضمن التقاط الضغط
               onTap: () async {
                 if (await Vibration.hasCustomVibrationsSupport()) {
                   Vibration.vibrate(preset: VibrationPreset.singleShortBuzz);
                 }
                 BlocProvider.of<StartViewCubit>(context).showRocketAnimation();
+
+                onPressed?.call(); // 👈 هنا استدعاء الكولباك لو موجود
               },
               child: Center(child: Lottie.asset(AppAssets.startButton)),
             ),

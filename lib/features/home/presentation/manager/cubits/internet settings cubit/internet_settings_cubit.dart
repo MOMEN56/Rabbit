@@ -63,7 +63,7 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
       },
       onDefaultServerSelectionDone: (client) {
         _ip = client?.ip ?? "0.0.0.0";
-        emit(state); // إعادة إرسال نفس الـ State لتحديث UI
+        emit(state); // ⚠️ هنا الأفضل تعمل نسخة جديدة بالـ ip لو أضفناه في state
       },
       onError: (errorMessage, error) {
         emit(const InternetSettingsInitial());
@@ -89,5 +89,9 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
     if (times.isEmpty) return 0;
     final avg = times.reduce((a, b) => a + b) ~/ times.length;
     return avg;
+  }
+
+  void reset() {
+    emit(const InternetSettingsInitial());
   }
 }
