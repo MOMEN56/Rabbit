@@ -1,24 +1,34 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_test_plus/flutter_speed_test_plus.dart';
 import 'package:dart_ping/dart_ping.dart';
+import 'package:equatable/equatable.dart';
 
 part 'internet_settings_state.dart';
 
 class InternetSettingsCubit extends Cubit<InternetSettingsState> {
   InternetSettingsCubit() : super(const InternetSettingsInitial());
 
-  final FlutterInternetSpeedTest _internetSpeedTest =
+  FlutterInternetSpeedTest _internetSpeedTest =
       FlutterInternetSpeedTest()..enableLog();
 
   String? _ip;
   String? get ip => _ip;
 
+  /// يبدأ اختبار السرعة
   Future<void> startTest() async {
+    // نعيد إنشاء كائن الاختبار كل مرة للتأكد من عدم وجود listeners قديمة
+    _internetSpeedTest = FlutterInternetSpeedTest()..enableLog();
+
     int pingValue = await _measurePing();
 
     await _internetSpeedTest.startTesting(
       onStarted: () {
-        emit(InternetDownloadInProgress(downloadRate: 0, downloadProgress: 0));
+        emit(
+          const InternetDownloadInProgress(
+            downloadRate: 0,
+            downloadProgress: 0,
+          ),
+        );
       },
       onProgress: (percent, data) async {
         if (data.type == TestType.download) {
@@ -47,6 +57,8 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
             bool6Sec: true,
           ),
         );
+
+        // بعد 6 ثواني يتم إظهار زر البداية مرة أخرى
         Future.delayed(const Duration(seconds: 6), () {
           emit(
             InternetTestCompleted(
@@ -67,11 +79,12 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
         emit(const InternetSettingsInitial());
       },
       onCancel: () {
-        emit(const InternetTestCancelled()); // 👈 حالة جديدة
+        emit(const InternetTestCancelled());
       },
     );
   }
 
+  /// يقيس ping
   Future<int> _measurePing() async {
     final ping = Ping('8.8.8.8', count: 3);
     final List<int> times = [];
@@ -85,16 +98,19 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
     }
 
     if (times.isEmpty) return 0;
-    final avg = times.reduce((a, b) => a + b) ~/ times.length;
-    return avg;
+    return times.reduce((a, b) => a + b) ~/ times.length;
   }
 
+  /// إعادة تعيين الـ state إلى Initial
   void reset() {
     emit(const InternetSettingsInitial());
   }
 
+  /// إلغاء الاختبار الحالي
   void cancelTest() {
-    _internetSpeedTest.cancelTest();
-    emit(const InternetTestCancelled()); // 👈 بدل Initial
+    try {
+      _internetSpeedTest.cancelTest();
+    } catch (_) {}
+    emit(const InternetTestCancelled());
   }
 }

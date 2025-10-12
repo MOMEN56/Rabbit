@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rabbit/core/utils/app_colors.dart';
+import 'package:rabbit/core/utils/app_dimensions.dart';
 import 'package:rabbit/core/utils/widgets/custom_app_bar.dart';
 import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_cubit.dart';
 import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_state.dart';
@@ -12,6 +13,7 @@ class StartViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppDimensions.init(context);
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(),
@@ -25,7 +27,12 @@ class StartViewBody extends StatelessWidget {
         child: BlocBuilder<StartViewCubit, StartViewState>(
           builder: (context, state) {
             if (state is StartViewButtonState) {
-              return const StartButton();
+              return Column(
+                children: [
+                  const StartButton(),
+                  SizedBox(height: AppDimensions.usableHeight * 0.25),
+                ],
+              );
             } else if (state is StartViewRocketAnimationState) {
               return const RocketAnimation();
             } else {

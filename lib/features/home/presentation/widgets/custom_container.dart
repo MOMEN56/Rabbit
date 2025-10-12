@@ -60,6 +60,13 @@ class CustomContainer extends StatelessWidget {
                                 ? AppColors.grey
                                 : AppColors.backgroundColor,
                         shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
                       child: Center(
                         child: Icon(

@@ -22,18 +22,34 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           cancelIcon
               ? [
                 Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.close_sharp,
-                      color: Colors.black,
-                      size: 32.sp,
-                    ),
-                    onPressed: () {
+                  padding: EdgeInsets.only(right: 16.w, top: 8.h),
+                  child: GestureDetector(
+                    onTap: () {
                       final cubit = context.read<InternetSettingsCubit>();
-                      cubit.cancelTest(); // 👈 يوقف أي اختبار شغال
-                      cubit.reset(); // 👈 يرجع الحالة للوضع الافتراضي
+                      cubit.cancelTest();
                     },
+                    child: Container(
+                      width: 60.sp,
+                      height: 60.sp,
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundColor,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.close_sharp,
+                          size: 28.sp,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ]

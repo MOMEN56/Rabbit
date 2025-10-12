@@ -1,6 +1,6 @@
 part of 'internet_settings_cubit.dart';
 
-abstract class InternetSettingsState {
+abstract class InternetSettingsState extends Equatable {
   final bool isDownloading;
   final bool showDownloadGraph;
   final bool isUploading;
@@ -25,6 +25,20 @@ abstract class InternetSettingsState {
     this.ping = 0,
     this.bool6Sec = false,
   });
+
+  @override
+  List<Object?> get props => [
+    isDownloading,
+    showDownloadGraph,
+    isUploading,
+    showUploadGraph,
+    downloadRate,
+    uploadRate,
+    downloadProgress,
+    uploadProgress,
+    ping,
+    bool6Sec,
+  ];
 }
 
 class InternetSettingsInitial extends InternetSettingsState {
