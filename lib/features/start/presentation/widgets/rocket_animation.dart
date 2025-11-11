@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:rabbit/core/utils/app_assets.dart';
-import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_cubit.dart';
-import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_state.dart';
+import 'package:Rabbit/core/utils/app_assets.dart';
+import 'package:Rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_cubit.dart';
+import 'package:Rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_state.dart';
 
 class RocketAnimation extends StatelessWidget {
   const RocketAnimation({super.key});

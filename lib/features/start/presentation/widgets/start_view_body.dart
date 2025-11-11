@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rabbit/core/utils/app_colors.dart';
-import 'package:rabbit/core/utils/app_dimensions.dart';
-import 'package:rabbit/core/utils/widgets/custom_app_bar.dart';
-import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_cubit.dart';
-import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_state.dart';
-import 'package:rabbit/features/start/presentation/widgets/rocket_animation.dart';
-import 'package:rabbit/features/start/presentation/widgets/start_button.dart';
+import 'package:Rabbit/core/utils/app_colors.dart';
+import 'package:Rabbit/core/utils/app_dimensions.dart';
+import 'package:Rabbit/core/utils/widgets/custom_app_bar.dart';
+import 'package:Rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_cubit.dart';
+import 'package:Rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_state.dart';
+import 'package:Rabbit/features/start/presentation/widgets/rocket_animation.dart';
+import 'package:Rabbit/features/start/presentation/widgets/start_button.dart';
 
 class StartViewBody extends StatelessWidget {
   const StartViewBody({super.key});

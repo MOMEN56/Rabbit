@@ -10,69 +10,61 @@ class SpeedMeter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: SfRadialGauge(
-                enableLoadingAnimation: true,
-                animationDuration: 2500,
-                axes: <RadialAxis>[
-                  RadialAxis(
-                    axisLineStyle: const AxisLineStyle(
-                      thicknessUnit: GaugeSizeUnit.factor,
-                      thickness: 0.15,
-                    ),
-                    radiusFactor: 0.9,
-                    showTicks: false,
-                    showLastLabel: true,
-                    maximum: 100, // الحد الأقصى
-                    axisLabelStyle: GaugeTextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontFamily: GoogleFonts.manrope().fontFamily,
-                    ),
-                    onCreateAxisRenderer: () => _CustomAxisRenderer(),
-                    pointers: <GaugePointer>[
-                      NeedlePointer(
-                        enableAnimation: true,
-                        gradient: const LinearGradient(
-                          colors: <Color>[
-                            Color.fromRGBO(203, 126, 223, 0),
-                            Color(0xFF00a1ff),
-                          ],
-                          stops: <double>[0.25, 0.75],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                        animationType: AnimationType.easeOutBack,
-                        value: speed, // ✅ القيمة من الـ Cubit
-                        animationDuration: 1300,
-                        needleStartWidth: 4,
-                        needleEndWidth: 8,
-                        needleLength: 0.8,
-                        knobStyle: const KnobStyle(knobRadius: 0),
-                      ),
-                      RangePointer(
-                        value: speed, // ✅ نفس القيمة
-                        width: 0.15,
-                        sizeUnit: GaugeSizeUnit.factor,
-                        color: const Color(0xFF00a1ff),
-                        animationDuration: 1300,
-                        animationType: AnimationType.easeOutBack,
-                        gradient: const SweepGradient(
-                          colors: <Color>[Color(0xFFc0e5fb), Color(0xFF166AF5)],
-                          stops: <double>[0.25, 0.75],
-                        ),
-                        enableAnimation: true,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+    return Center(
+      child: SfRadialGauge(
+        enableLoadingAnimation: true,
+        animationDuration: 2500,
+        axes: <RadialAxis>[
+          RadialAxis(
+            axisLineStyle: const AxisLineStyle(
+              thicknessUnit: GaugeSizeUnit.factor,
+              thickness: 0.15,
             ),
+            radiusFactor: 0.9,
+            showTicks: false,
+            showLastLabel: true,
+            maximum: 100.0, // الحد الأقصى
+            axisLabelStyle: GaugeTextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontFamily: GoogleFonts.manrope().fontFamily,
+            ),
+            onCreateAxisRenderer: () => _CustomAxisRenderer(),
+            pointers: <GaugePointer>[
+              NeedlePointer(
+                enableAnimation: true,
+                gradient: const LinearGradient(
+                  colors: <Color>[
+                    Color.fromRGBO(203, 126, 223, 0),
+                    Color(0xFF00a1ff),
+                  ],
+                  stops: <double>[0.25, 0.75],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                ),
+                animationType: AnimationType.easeOutBack,
+                value: speed, // ✅ القيمة من الـ Cubit
+                animationDuration: 1300,
+                needleStartWidth: 4,
+                needleEndWidth: 8,
+                needleLength: 0.8,
+                knobStyle: const KnobStyle(knobRadius: 0),
+              ),
+              RangePointer(
+                value: speed, // ✅ نفس القيمة
+                width: 0.15,
+                sizeUnit: GaugeSizeUnit.factor,
+                color: const Color(0xFF00a1ff),
+                animationDuration: 1300,
+                animationType: AnimationType.easeOutBack,
+                gradient: const SweepGradient(
+                  colors: <Color>[Color(0xFFc0e5fb), Color(0xFF166AF5)],
+                  stops: <double>[0.25, 0.75],
+                ),
+                enableAnimation: true,
+              ),
+            ],
           ),
         ],
       ),

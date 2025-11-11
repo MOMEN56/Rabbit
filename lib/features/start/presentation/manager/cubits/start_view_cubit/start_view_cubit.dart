@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_state.dart';
+import 'package:Rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_state.dart';
 
 class StartViewCubit extends Cubit<StartViewState> {
   StartViewCubit() : super(StartViewButtonState());

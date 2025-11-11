@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:rabbit/core/utils/app_assets.dart';
-import 'package:rabbit/core/utils/app_colors.dart';
-import 'package:rabbit/core/utils/app_dimensions.dart';
+import 'package:Rabbit/core/utils/app_assets.dart';
+import 'package:Rabbit/core/utils/app_colors.dart';
+import 'package:Rabbit/core/utils/app_dimensions.dart';
 
 class CustomContainer extends StatelessWidget {
   final String unit;
@@ -35,7 +35,11 @@ class CustomContainer extends StatelessWidget {
           gradient:
               isClicked
                   ? LinearGradient(
-                    colors: [Colors.blue[900]!, Colors.blue[400]!],
+                    colors: [
+                      Colors.blue[900]!,
+                      Colors.blue[600]!,
+                      Colors.lightBlue[300]!,
+                    ],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                   )

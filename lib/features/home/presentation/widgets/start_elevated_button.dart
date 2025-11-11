@@ -1,36 +1,70 @@
+import 'package:Rabbit/features/home/presentation/manager/cubits/internet%20settings%20cubit/internet_settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vibration/vibration.dart';
 import 'package:vibration/vibration_presets.dart';
-import 'package:rabbit/core/utils/app_assets.dart';
+import 'package:Rabbit/core/utils/app_assets.dart';
+import 'package:Rabbit/core/utils/widgets/custom_snack_bar.dart';
+import 'package:Rabbit/features/home/presentation/manager/cubits/internet%20checker%20cubit/internet_checker_state_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:Rabbit/features/start/presentation/manager/cubits/start_view_cubit/start_view_cubit.dart';
 
 class StartElevatedButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const StartElevatedButton({super.key, required this.onPressed});
+  const StartElevatedButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () async {
-        // ✅ الاهتزاز عند الضغط
-        if (await Vibration.hasCustomVibrationsSupport()) {
-          Vibration.vibrate(preset: VibrationPreset.singleShortBuzz);
+    return BlocConsumer<InternetCheckerStateCubit, InternetCheckerStateState>(
+      listener: (context, state) async {
+        // ✅ لو الإنترنت رجع بعد انقطاع
+        if (state is InternetConnected) {
+          CustomSnackBar.showConnected(context);
         }
-
-        // ✅ تنفيذ الوظيفة المرسلة
-        onPressed();
       },
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Colors.transparent),
-        elevation: WidgetStateProperty.all(0),
-        shadowColor: WidgetStateProperty.all(Colors.transparent),
-        surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
-        overlayColor: WidgetStateProperty.all(Colors.transparent),
-        splashFactory: NoSplash.splashFactory, // 🔥 إلغاء تأثير الضغط تمامًا
-        padding: WidgetStateProperty.all(EdgeInsets.zero),
-      ),
-      child: Lottie.asset(AppAssets.startButton, fit: BoxFit.cover),
+      builder: (context, state) {
+        return ElevatedButton(
+          onPressed: () async {
+            final connectionState =
+                context.read<InternetCheckerStateCubit>().state;
+
+            switch (connectionState.runtimeType) {
+              case InternetConnected:
+                context.read<InternetSettingsCubit>().reset();
+                if (await Vibration.hasCustomVibrationsSupport()) {
+                  Vibration.vibrate(preset: VibrationPreset.singleShortBuzz);
+                }
+                break;
+
+              case InternetNoAccess:
+                CustomSnackBar.showNoAccess(context);
+                context.read<InternetSettingsCubit>().cancelTest();
+
+                if (await Vibration.hasCustomVibrationsSupport()) {
+                  Vibration.vibrate(preset: VibrationPreset.gentleReminder);
+                }
+                break;
+
+              case InternetDisconnected:
+                CustomSnackBar.showDisconnected(context);
+                context.read<InternetSettingsCubit>().cancelTest();
+                if (await Vibration.hasCustomVibrationsSupport()) {
+                  Vibration.vibrate(preset: VibrationPreset.gentleReminder);
+                }
+                break;
+            }
+          },
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(Colors.transparent),
+            elevation: WidgetStateProperty.all(0),
+            shadowColor: WidgetStateProperty.all(Colors.transparent),
+            surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            splashFactory: NoSplash.splashFactory, // 🔥 إلغاء تأثير الضغط
+            padding: WidgetStateProperty.all(EdgeInsets.zero),
+          ),
+          child: Lottie.asset(AppAssets.startButton, fit: BoxFit.cover),
+        );
+      },
     );
   }
 }

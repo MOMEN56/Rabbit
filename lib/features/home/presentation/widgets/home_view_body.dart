@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rabbit/core/utils/app_colors.dart';
-import 'package:rabbit/core/utils/app_dimensions.dart';
-import 'package:rabbit/core/utils/format_helper.dart';
-import 'package:rabbit/core/utils/widgets/custom_app_bar.dart';
-import 'package:rabbit/features/home/presentation/manager/cubits/internet%20settings%20cubit/internet_settings_cubit.dart';
-import 'package:rabbit/features/home/presentation/widgets/custom_container.dart';
-import 'package:rabbit/features/home/presentation/widgets/speed_meter.dart';
-import 'package:rabbit/features/home/presentation/widgets/start_elevated_button.dart';
+import 'package:Rabbit/core/utils/app_colors.dart';
+import 'package:Rabbit/core/utils/app_dimensions.dart';
+import 'package:Rabbit/core/utils/format_helper.dart';
+import 'package:Rabbit/core/utils/widgets/custom_app_bar.dart';
+import 'package:Rabbit/features/home/presentation/manager/cubits/internet%20settings%20cubit/internet_settings_cubit.dart';
+import 'package:Rabbit/features/home/presentation/widgets/custom_container.dart';
+import 'package:Rabbit/features/home/presentation/widgets/speed_meter.dart';
+import 'package:Rabbit/features/home/presentation/widgets/start_elevated_button.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -21,10 +21,7 @@ class HomeViewBody extends StatelessWidget {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
           builder: (context, state) {
-            final bool showCancel =
-                state is InternetDownloadInProgress ||
-                state is InternetUploadInProgress;
-            return CustomAppBar(cancelIcon: showCancel);
+            return CustomAppBar(cancelIcon: true);
           },
         ),
       ),
@@ -44,12 +41,7 @@ class HomeViewBody extends StatelessWidget {
                 child:
                     (testCompleted && !state.bool6Sec) ||
                             state is InternetTestCancelled
-                        ? StartElevatedButton(
-                          onPressed: () {
-                            context.read<InternetSettingsCubit>().reset();
-                            context.read<InternetSettingsCubit>().startTest();
-                          },
-                        )
+                        ? StartElevatedButton()
                         : SpeedMeter(speed: speed),
               );
             },

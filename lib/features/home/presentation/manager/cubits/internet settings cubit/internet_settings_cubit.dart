@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_test_plus/flutter_speed_test_plus.dart';
 import 'package:dart_ping/dart_ping.dart';
@@ -14,9 +15,12 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
   String? _ip;
   String? get ip => _ip;
 
-  /// يبدأ اختبار السرعة
+  // ✅ المتغيرات الجديدة للكشف عن التوقف
+  Timer? _timeoutTimer;
+  double _lastDownload = -1;
+  double _lastUpload = -1;
+
   Future<void> startTest() async {
-    // نعيد إنشاء كائن الاختبار كل مرة للتأكد من عدم وجود listeners قديمة
     _internetSpeedTest = FlutterInternetSpeedTest()..enableLog();
 
     int pingValue = await _measurePing();
@@ -30,6 +34,7 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
           ),
         );
       },
+
       onProgress: (percent, data) async {
         if (data.type == TestType.download) {
           emit(
@@ -38,6 +43,8 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
               downloadProgress: percent,
             ),
           );
+
+          _checkStuckCondition(data.transferRate, 0); // 👈 NEW
         } else if (data.type == TestType.upload) {
           emit(
             InternetUploadInProgress(
@@ -46,8 +53,11 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
               downloadRate: state.downloadRate,
             ),
           );
+
+          _checkStuckCondition(state.downloadRate, data.transferRate); // 👈 NEW
         }
       },
+
       onCompleted: (download, upload) {
         emit(
           InternetTestCompleted(
@@ -57,6 +67,10 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
             bool6Sec: true,
           ),
         );
+
+        // ✅ إلغاء مؤقت عدم التغيير
+        _timeoutTimer?.cancel();
+        _timeoutTimer = null;
 
         // بعد 6 ثواني يتم إظهار زر البداية مرة أخرى
         Future.delayed(const Duration(seconds: 6), () {
@@ -70,21 +84,50 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
           );
         });
       },
+
       onDefaultServerSelectionInProgress: () {},
+
       onDefaultServerSelectionDone: (client) {
         _ip = client?.ip ?? "0.0.0.0";
         emit(state);
       },
+
       onError: (errorMessage, error) {
         emit(const InternetSettingsInitial());
       },
+
       onCancel: () {
+        _timeoutTimer?.cancel();
+        _timeoutTimer = null;
         emit(const InternetTestCancelled());
       },
     );
   }
 
-  /// يقيس ping
+  /// ✅ دالة فحص توقف السرعات
+  void _checkStuckCondition(double download, double upload) {
+    if (download == 0 && upload == 0) {
+      if (_lastDownload == download && _lastUpload == upload) {
+        if (_timeoutTimer == null) {
+          _timeoutTimer = Timer(const Duration(seconds: 5), () {
+            cancelTest();
+          });
+        }
+      } else {
+        _timeoutTimer?.cancel();
+        _timeoutTimer = null;
+        _lastDownload = download;
+        _lastUpload = upload;
+      }
+    } else {
+      _timeoutTimer?.cancel();
+      _timeoutTimer = null;
+      _lastDownload = download;
+      _lastUpload = upload;
+    }
+  }
+
+  /// ✅ يقيس ping
   Future<int> _measurePing() async {
     final ping = Ping('8.8.8.8', count: 3);
     final List<int> times = [];
@@ -101,12 +144,12 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
     return times.reduce((a, b) => a + b) ~/ times.length;
   }
 
-  /// إعادة تعيين الـ state إلى Initial
+  /// ✅ إعادة تعيين الـ state إلى Initial
   void reset() {
     emit(const InternetSettingsInitial());
   }
 
-  /// إلغاء الاختبار الحالي
+  /// ✅ إلغاء الاختبار الحالي
   void cancelTest() {
     try {
       _internetSpeedTest.cancelTest();

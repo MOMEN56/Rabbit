@@ -1,9 +1,16 @@
+import 'package:Rabbit/features/home/presentation/manager/cubits/internet%20checker%20cubit/internet_checker_state_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rabbit/core/utils/routing/app_router.dart';
+import 'package:Rabbit/core/utils/routing/app_router.dart';
 
 void main() {
-  runApp(const Rabbit());
+  runApp(
+    BlocProvider(
+      create: (_) => InternetCheckerStateCubit(),
+      child: const Rabbit(),
+    ),
+  );
 }
 
 class Rabbit extends StatelessWidget {

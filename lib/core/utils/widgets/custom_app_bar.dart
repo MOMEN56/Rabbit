@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rabbit/core/utils/app_colors.dart';
-import 'package:rabbit/features/home/presentation/manager/cubits/internet%20settings%20cubit/internet_settings_cubit.dart';
+import 'package:Rabbit/core/utils/app_colors.dart';
+import 'package:Rabbit/features/home/presentation/manager/cubits/internet%20settings%20cubit/internet_settings_cubit.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool cancelIcon;
