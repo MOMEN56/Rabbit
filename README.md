@@ -134,6 +134,6 @@ lib/
 * Built with performance and UX in mind
 
 ---
-
+![image](https://github.com/MOMEN56/Rabbit/blob/main/assets/036143227516255.684158605fec9.png)
 Thank you for checking out the project! 🚀
 Feel free to contribute, report issues, or suggest improvements.
