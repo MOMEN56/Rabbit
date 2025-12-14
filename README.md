@@ -11,7 +11,7 @@ This project is a Flutter-based **Internet Speed Test application** that allows 
 The app focuses on real-time network status detection, clean architecture, and responsive animations to provide a polished user experience.
 
 ---
-
+![image](https://github.com/MOMEN56/Rabbit/blob/main/assets/036143227516255.684158605fec9.png)
 ## ✨ Key Features
 
 * 📶 Real-time internet connection monitoring (Connected / No Access / Disconnected)
@@ -134,6 +134,6 @@ lib/
 * Built with performance and UX in mind
 
 ---
-![image](https://github.com/MOMEN56/Rabbit/blob/main/assets/036143227516255.684158605fec9.png)
+
 Thank you for checking out the project! 🚀
 Feel free to contribute, report issues, or suggest improvements.
