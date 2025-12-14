@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import 'package:Rabbit/features/home/presentation/manager/cubits/internet%20checker%20cubit/internet_checker_state_cubit.dart';
+>>>>>>> ead6508 (add button to appbar)
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:Rabbit/core/utils/app_colors.dart';
@@ -17,15 +21,30 @@ class HomeViewBody extends StatelessWidget {
     AppDimensions.init(context);
 
     return Scaffold(
+<<<<<<< HEAD
+=======
+      backgroundColor: AppColors.backgroundColor,
+>>>>>>> ead6508 (add button to appbar)
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: BlocBuilder<InternetSettingsCubit, InternetSettingsState>(
           builder: (context, state) {
+<<<<<<< HEAD
             return CustomAppBar(cancelIcon: true);
           },
         ),
       ),
       backgroundColor: AppColors.backgroundColor,
+=======
+            final bool showCancel =
+                state is InternetDownloadInProgress ||
+                state is InternetUploadInProgress;
+
+            return CustomAppBar(cancelIcon: showCancel);
+          },
+        ),
+      ),
+>>>>>>> ead6508 (add button to appbar)
       body: Column(
         children: [
           SizedBox(height: AppDimensions.usableHeight * 0.025),
@@ -40,7 +59,11 @@ class HomeViewBody extends StatelessWidget {
                 height: AppDimensions.usableHeight * 0.35,
                 child:
                     (testCompleted && !state.bool6Sec) ||
+<<<<<<< HEAD
                             state is InternetTestCancelled
+=======
+                            state is InternetTestCancelled 
+>>>>>>> ead6508 (add button to appbar)
                         ? StartElevatedButton()
                         : SpeedMeter(speed: speed),
               );

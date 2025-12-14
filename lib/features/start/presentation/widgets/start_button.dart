@@ -16,9 +16,21 @@ class StartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return BlocConsumer<InternetCheckerStateCubit, InternetCheckerStateState>(
       listener: (context, state) async {
         CustomSnackBar.showConnected(context);
+=======
+    int temp = 0;
+    return BlocConsumer<InternetCheckerStateCubit, InternetCheckerStateState>(
+      listener: (context, state) async {
+        if (state is InternetConnected) {
+          temp++;
+          if (temp > 0) {
+            CustomSnackBar.showConnected(context);
+          }
+        }
+>>>>>>> ead6508 (add button to appbar)
       },
       builder: (context, internetState) {
         return BlocBuilder<StartViewCubit, StartViewState>(

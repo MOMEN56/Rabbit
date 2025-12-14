@@ -18,6 +18,13 @@ class CustomSnackBar {
     _clearAndShow(context, message: "Disconnected", color: Colors.red);
   }
 
+<<<<<<< HEAD
+=======
+  static void showcancelled(BuildContext context) {
+    _clearAndShow(context, message: "Test is cancelled", color: Colors.grey);
+  }
+
+>>>>>>> ead6508 (add button to appbar)
   static void _clearAndShow(
     BuildContext context, {
     required String message,
