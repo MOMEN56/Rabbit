@@ -14,14 +14,14 @@ The app focuses on real-time network status detection, clean architecture, and r
 ![image](https://github.com/MOMEN56/Rabbit/blob/main/assets/036143227516255.684158605fec9.png)
 ## ✨ Key Features
 
-* 📶 Real-time internet connection monitoring (Connected / No Access / Disconnected)
-* 🚀 Animated start experience with Lottie
-* 📊 Live download & upload speed tracking
-* ⏱ Accurate ping measurement
-* 🌐 Public IP detection
-* 🧠 Smart test cancellation & timeout handling
-* 🔄 Automatic state management using Bloc (Cubit)
-* 📱 Fully responsive UI using ScreenUtil
+*  Real-time internet connection monitoring (Connected / No Access / Disconnected)
+*  Animated start experience with Lottie
+*  Live download & upload speed tracking
+*  Accurate ping measurement
+*  Public IP detection
+*  Smart test cancellation & timeout handling
+*  Automatic state management using Bloc (Cubit)
+*  Fully responsive UI using ScreenUtil
 
 ---
 
