@@ -9,18 +9,13 @@ class InternetCheckerStateCubit extends Cubit<InternetCheckerStateState> {
   final Connectivity _connectivity = Connectivity();
   StreamSubscription? _connectivitySubscription;
   StreamSubscription? _internetSubscription;
-  bool _hasNetwork = false; // لتتبع هل في شبكة متاحة أصلاً
+  bool _hasNetwork = false;
 
   InternetCheckerStateCubit() : super(InternetInitial()) {
     _monitorConnectivity();
     _monitorInternetStatus();
   }
   InternetCheckerStateState? previousState;
-
-  void _emitWithPrevious(InternetCheckerStateState newState) {
-    previousState = state;
-    emit(newState);
-  }
 
   void _monitorConnectivity() {
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen((
@@ -43,7 +38,6 @@ class InternetCheckerStateCubit extends Cubit<InternetCheckerStateState> {
     _internetSubscription = InternetConnection().onStatusChange.listen((
       status,
     ) {
-      // 👇 لا تتحقق من الإنترنت إذا ما فيش شبكة أصلًا
       if (!_hasNetwork) return;
 
       if (status == InternetStatus.connected) {

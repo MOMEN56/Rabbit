@@ -23,7 +23,7 @@ class SpeedMeter extends StatelessWidget {
             radiusFactor: 0.9,
             showTicks: false,
             showLastLabel: true,
-            maximum: 100.0, // الحد الأقصى
+            maximum: 100.0,
             axisLabelStyle: GaugeTextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class SpeedMeter extends StatelessWidget {
                   end: Alignment.topCenter,
                 ),
                 animationType: AnimationType.easeOutBack,
-                value: speed, // ✅ القيمة من الـ Cubit
+                value: speed,
                 animationDuration: 1300,
                 needleStartWidth: 4,
                 needleEndWidth: 8,
@@ -52,7 +52,7 @@ class SpeedMeter extends StatelessWidget {
                 knobStyle: const KnobStyle(knobRadius: 0),
               ),
               RangePointer(
-                value: speed, // ✅ نفس القيمة
+                value: speed,
                 width: 0.15,
                 sizeUnit: GaugeSizeUnit.factor,
                 color: const Color(0xFF00a1ff),

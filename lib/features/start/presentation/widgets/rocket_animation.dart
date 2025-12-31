@@ -14,7 +14,7 @@ class RocketAnimation extends StatelessWidget {
       builder: (context, state) {
         if (state is StartViewRocketAnimationState) {
           return Column(
-            mainAxisAlignment: MainAxisAlignment.end, // 👈 يبدأ من تحت
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Expanded(child: Center(child: Lottie.asset(AppAssets.rocket))),
             ],

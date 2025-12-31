@@ -15,14 +15,8 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
   String? _ip;
   String? get ip => _ip;
 
-  // ✅ المتغيرات الجديدة للكشف عن التوقف
   Timer? _timeoutTimer;
-<<<<<<< HEAD
-  double _lastDownload = -1;
-  double _lastUpload = -1;
 
-=======
->>>>>>> ead6508 (add button to appbar)
   Future<void> startTest() async {
     _internetSpeedTest = FlutterInternetSpeedTest()..enableLog();
 
@@ -46,11 +40,6 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
               downloadProgress: percent,
             ),
           );
-<<<<<<< HEAD
-
-          _checkStuckCondition(data.transferRate, 0); // 👈 NEW
-=======
->>>>>>> ead6508 (add button to appbar)
         } else if (data.type == TestType.upload) {
           emit(
             InternetUploadInProgress(
@@ -59,11 +48,6 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
               downloadRate: state.downloadRate,
             ),
           );
-<<<<<<< HEAD
-
-          _checkStuckCondition(state.downloadRate, data.transferRate); // 👈 NEW
-=======
->>>>>>> ead6508 (add button to appbar)
         }
       },
 
@@ -77,14 +61,9 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
           ),
         );
 
-        // ✅ إلغاء مؤقت عدم التغيير
-<<<<<<< HEAD
         _timeoutTimer?.cancel();
         _timeoutTimer = null;
-=======
->>>>>>> ead6508 (add button to appbar)
 
-        // بعد 6 ثواني يتم إظهار زر البداية مرة أخرى
         Future.delayed(const Duration(seconds: 6), () {
           emit(
             InternetTestCompleted(
@@ -116,33 +95,6 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
     );
   }
 
-<<<<<<< HEAD
-  /// ✅ دالة فحص توقف السرعات
-  void _checkStuckCondition(double download, double upload) {
-    if (download == 0 && upload == 0) {
-      if (_lastDownload == download && _lastUpload == upload) {
-        if (_timeoutTimer == null) {
-          _timeoutTimer = Timer(const Duration(seconds: 5), () {
-            cancelTest();
-          });
-        }
-      } else {
-        _timeoutTimer?.cancel();
-        _timeoutTimer = null;
-        _lastDownload = download;
-        _lastUpload = upload;
-      }
-    } else {
-      _timeoutTimer?.cancel();
-      _timeoutTimer = null;
-      _lastDownload = download;
-      _lastUpload = upload;
-    }
-  }
-
-  /// ✅ يقيس ping
-=======
->>>>>>> ead6508 (add button to appbar)
   Future<int> _measurePing() async {
     final ping = Ping('8.8.8.8', count: 3);
     final List<int> times = [];
@@ -159,22 +111,13 @@ class InternetSettingsCubit extends Cubit<InternetSettingsState> {
     return times.reduce((a, b) => a + b) ~/ times.length;
   }
 
-  /// ✅ إعادة تعيين الـ state إلى Initial
   void reset() {
     emit(const InternetSettingsInitial());
   }
 
-  /// ✅ إلغاء الاختبار الحالي
   void cancelTest() {
-<<<<<<< HEAD
-    try {
-      _internetSpeedTest.cancelTest();
-    } catch (_) {}
-    emit(const InternetTestCancelled());
-=======
     _internetSpeedTest.cancelTest();
     emit(const InternetTestCancelled());
     emit(const InternetSettingsInitial());
->>>>>>> ead6508 (add button to appbar)
   }
 }
